@@ -1,2 +1,1 @@
-# Machine-learning-examples
-Demonstrarion of different machine learning algorithms
+# ML Model Deployment on Heroku
