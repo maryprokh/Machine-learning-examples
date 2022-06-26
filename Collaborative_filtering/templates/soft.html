@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Movie recomendation</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+</head>
+
+<body>
+
+  <h1>Top-5 movies recommender</h1>
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('home_without_filters') }}">Recommender without filtering</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home_strict_filters') }}">Strict filtering</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home_soft_filters') }}">Soft filtering</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+            <h1 class="display-4">
+          		{% if title %}
+          		  {{ title }}
+          		{% endif %}
+	    </h1>
+        </div>
+    </div>
+
+
+  <h4>Choose a movie from the list to see five the nearest movies to it.</h4>
+
+     <!-- Main Input For Receiving Query to our ML -->
+  
+  <form action="{{ url_for('predict_soft')}}"method="post">
+  <select name= movies >
+    {% for movie in movies %}
+    <option value= "{{movie}}" SELECTED>{{movie}}</option>"
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="btn btn-primary btn-block btn-large" name="action" value="Select_movie">Learn genre</button>
+  </form>
+   {{selected_genre}}
+
+ <form action="{{ url_for('predict_soft')}}"method="post">
+ <input type="text" name="genre" placeholder="Enter a genre" required="required" />
+  <button type="submit" class="btn btn-primary btn-block btn-large" name="action" value="Select_genre">Submit</button>
+  </form>
+  <p>
+   <b><h4>
+   {{selected}}
+   <ul>
+   {% for movie in prediction_text %}
+     <li>{{ movie }}</li>
+   {% endfor %}
+   </ul>
+   </b></h4>
+   </p> 
+</body>
+</html>
